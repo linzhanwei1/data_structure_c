@@ -1,12 +1,11 @@
-#include "Exception.h"
-#include "List.h"
+#include "SeqList.h"
 #include <iostream>
 
 using namespace std;
 using namespace DTLib;
 
 int main(int argc, char *argv[]) {
-    List<int> *l = NULL;
+    SeqList<int> *l;
 
     return 0;
 }

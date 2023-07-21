@@ -27,3 +27,25 @@ public:
 - 线性表在C++中表现为一个抽象类
 ## lesson15
 ### 线性表的顺序存储结构
+## lesson16
+### 顺序存储结构的抽象实现
+#### 数据结构
+```
+template <typename T> class SeqList : public List<T> {
+protected:
+    T  *m_array;
+    int m_length;
+
+public:
+    bool insert(int i, const T &e);
+    bool remove(int i);
+    bool set(int i, const T &e);
+    bool get(int i, T &e) const;
+    int length() const;
+    void clear();
+    // 顺序存储线性表的数组访问方式
+    T &operator[](int i);
+    T operator[](int i) const;
+    // 顺序存储空间的容量
+    virtual int capacity() const = 0;
+```
