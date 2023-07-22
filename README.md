@@ -87,3 +87,43 @@ public:
     ~DynamicList();
 };
 ```
+## 数组类的创建
+- 数组类包含长度信息
+- 数组类能够主动发现越界问题
+### Array设计要点
+- 抽象类模板，存储空间的位置和大小由子类完成
+- 重载数组操作符，判断访问下标是否合法
+- 提供数组长度的抽象访问函数
+- 提供数组对象间复制操作
+```
+namespace DTLib {
+template <typename T> class Array : public Object {
+protected:
+    T *m_array;
+
+public:
+    virtual bool set(int i, const T &e);
+    virtual bool get(int i, T &e) const;
+    virtual int  length() const = 0;
+    T           &operator[](int i);
+    T            operator[](int i) const;
+};
+```
+### StaticArray设计要点
+- 封装原生数组
+- 使用模板参数决定数组大小
+- 实现函数返回数组长度
+- 拷贝构造和赋值操作
+```
+namespace DTLib {
+template <typename T, int N> class StaticArray : public Array<T> {
+protected:
+    T m_space[ N ];
+
+public:
+    StaticArray();
+    StaticArray(const StaticArray<T, N> &obj);
+    StaticArray<T, N> &operator=(const StaticArray<T, N> &obj);
+    int                length() const;
+};
+```
