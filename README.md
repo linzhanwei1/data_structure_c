@@ -65,3 +65,25 @@ public:
     int capacity() const;
 };
 ```
+#### DynamicList设计要点
+##### 函数异常安全的概念
+- 不泄露任何资源
+- 不允许破坏数据
+##### 函数异常安全的基本保证
+- 如果异常被抛出
+- 对象内的任何成员仍然能保持有效状态
+- 没有数据的破坏及资源泄露
+#### 数据结构
+```
+namespace DTLib {
+template <typename T> class DynamicList : public SeqList<T> {
+protected:
+    int m_capacity;
+
+public:
+    DynamicList(int capacity);
+    int  capacity() const;
+    void resize(int capacity);
+    ~DynamicList();
+};
+```
