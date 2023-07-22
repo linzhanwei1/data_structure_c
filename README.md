@@ -49,3 +49,19 @@ public:
     // 顺序存储空间的容量
     virtual int capacity() const = 0;
 ```
+## lesson17
+### StaticList设计要点
+- 使用原生数组作为顺序存储空间
+- 使用模板参数决定数组大小
+#### 数据结构
+``` C++
+namespace DTLib {
+template <typename T, int N> class StaticList : public SeqList<T> {
+protected:
+    T m_space[ N ];
+
+public:
+    StaticList();
+    int capacity() const;
+};
+```
