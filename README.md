@@ -127,3 +127,25 @@ public:
     int                length() const;
 };
 ```
+## lesson20
+### DynamicArray设计要点
+- 动态确定内部数组空间的大小
+- 实现函数返回数组长度
+- 拷贝构造和赋值操作
+```
+namespace DTLib {
+template <typename T> class DynamicArray : public Array<T> {
+protected:
+    int m_length;
+
+public:
+    DynamicArray(int length);
+    DynamicArray(const DynamicArray<T> &obj);
+    DynamicArray<T> &operator=(const DynamicArray<T> &obj);
+    int              length() const;
+    void             resize(int length);
+
+    ~DynamicArray();
+};
+
+```
