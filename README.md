@@ -95,7 +95,7 @@ public:
 - 重载数组操作符，判断访问下标是否合法
 - 提供数组长度的抽象访问函数
 - 提供数组对象间复制操作
-```
+```C++
 namespace DTLib {
 template <typename T> class Array : public Object {
 protected:
@@ -114,7 +114,7 @@ public:
 - 使用模板参数决定数组大小
 - 实现函数返回数组长度
 - 拷贝构造和赋值操作
-```
+```c++
 namespace DTLib {
 template <typename T, int N> class StaticArray : public Array<T> {
 protected:
@@ -132,7 +132,7 @@ public:
 - 动态确定内部数组空间的大小
 - 实现函数返回数组长度
 - 拷贝构造和赋值操作
-```
+```c++
 namespace DTLib {
 template <typename T> class DynamicArray : public Array<T> {
 protected:
@@ -148,4 +148,27 @@ public:
     ~DynamicArray();
 };
 
+```
+## lesson21
+### 单链表数据结构
+```
+template <typename T> class LinkList : public List<T> {
+protected:
+    struct Node : public Object {
+        T     value;
+        Node *next;
+    };
+    Node m_header;
+    int  m_length;
+
+public:
+    LinkList();
+    bool insert(const T &e);
+    bool insert(int i, const T &e);
+    bool remove(int i);
+    bool set(int i, const T &e);
+    bool get(int i, T &e) const;
+    int  length() const;
+    void clear();
+};
 ```
