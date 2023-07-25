@@ -15,8 +15,9 @@ protected:
         char  reserved[ sizeof(T) ];
         Node *next;
     } m_header;
-    int m_length;
-
+    int   m_length;
+    int   m_step;
+    Node *m_current;
     Node *position(int i) const {
         Node *ret = reinterpret_cast<Node *>(&m_header);
 
@@ -26,11 +27,19 @@ protected:
 
         return ret;
     }
+    virtual Node *create() {
+        return new Node();
+    }
+    virtual void destroy(Node *pn) {
+        delete pn;
+    }
 
 public:
     LinkList() {
         m_header.next = NULL;
         m_length      = 0;
+        m_step        = 1;
+        m_current     = NULL;
     }
 
     bool insert(const T &e) {
@@ -40,7 +49,7 @@ public:
         bool ret = (0 <= i) && (i <= m_length);
 
         if (ret) {
-            Node *node = new Node();
+            Node *node = create();
 
             if (node != NULL) {
                 Node *current = position(i);
@@ -65,7 +74,7 @@ public:
 
             Node *toDel   = current->next;
             current->next = toDel->next;
-            delete toDel;
+            destroy(toDel);
             m_length--;
         }
 
@@ -102,6 +111,24 @@ public:
 
         return ret;
     }
+    int find(const T &e) const {
+        int   ret  = -1;
+        int   i    = 0;
+        Node *node = m_header.next;
+
+        while (node) {
+            if (node->value == e) {
+                ret = i;
+                break;
+            } else {
+                node = node->next;
+                i++;
+            }
+        }
+
+        return ret;
+    }
+
     int length() const {
         return m_length;
     }
@@ -110,9 +137,39 @@ public:
             Node *toDel = m_header.next;
 
             m_header.next = toDel->next;
-            delete toDel;
+            destroy(toDel);
         }
     }
+    int move(int i, int step = 1) {
+        bool ret = (0 <= i) && (i < m_length) && (step > 0);
+
+        if (ret) {
+            m_current = position(i)->next;
+            m_step    = step;
+        }
+
+        return ret;
+    }
+    bool end() {
+        return (m_current == NULL);
+    }
+    T current() {
+        if (!end()) {
+            return m_current->value;
+        } else {
+            THROW_EXCEPTION(InvalidOperationException, "No valid at current position ...");
+        }
+    }
+    bool next() {
+        int i = 0;
+
+        while ((i < m_step) && !end()) {
+            m_current = m_current->next;
+            i++;
+        }
+        return (i == m_step);
+    }
+
     ~LinkList() {
         clear();
     }

@@ -8,7 +8,7 @@
 - 获取线性表的长度
 - 清空线性表
 #### 数据结构
-```
+```C++
 template <typename T> class List : public Object {
 public:
     virtual bool insert(int i, const T &e) = 0;
@@ -30,7 +30,7 @@ public:
 ## lesson16
 ### 顺序存储结构的抽象实现
 #### 数据结构
-```
+```C++
 template <typename T> class SeqList : public List<T> {
 protected:
     T  *m_array;
@@ -74,7 +74,7 @@ public:
 - 对象内的任何成员仍然能保持有效状态
 - 没有数据的破坏及资源泄露
 #### 数据结构
-```
+```C++
 namespace DTLib {
 template <typename T> class DynamicList : public SeqList<T> {
 protected:
@@ -114,7 +114,7 @@ public:
 - 使用模板参数决定数组大小
 - 实现函数返回数组长度
 - 拷贝构造和赋值操作
-```c++
+```C++
 namespace DTLib {
 template <typename T, int N> class StaticArray : public Array<T> {
 protected:
@@ -151,7 +151,7 @@ public:
 ```
 ## lesson21
 ### 单链表数据结构
-```
+```C++
 template <typename T> class LinkList : public List<T> {
 protected:
     struct Node : public Object {
@@ -172,3 +172,6 @@ public:
     void clear();
 };
 ```
+## lesson25
+### 静态单链表
+
